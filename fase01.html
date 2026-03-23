@@ -158,12 +158,19 @@ function responder() {
 
     etapa++;
 
-    if (etapa < perguntas.length) {
-      carregarPergunta();
-    } else {
-      alert("Você passou! Fez o mínimo, né...");
-      window.location.href = "01.html";;
-    }
+   if (etapa < perguntas.length) {
+  carregarPergunta();
+} else {
+
+  document.querySelector(".container").innerHTML = `
+    <h1>Camada concluída</h1>
+    <p>Você conseguiu…</p>
+  `;
+
+  setTimeout(() => {
+    window.location.href = "01.html";
+  }, 2000);
+}
 
   } else {
     alert("Hmm... tenta de novo 💭");
