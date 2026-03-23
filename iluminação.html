@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Fase Luz</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+/* modo escuro */
+.dark {
+  background: black;
+  color: #888;
+}
+
+/* elementos de fundo estilo UI anime */
+.bg-shape {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 50%;
+  top: -50px;
+  left: -50px;
+}
+
+.bg-shape2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: rgba(0,0,0,0.03);
+  border-radius: 50%;
+  bottom: -100px;
+  right: -100px;
+}
+
+/* container central */
+.container {
+  text-align: center;
+  z-index: 2;
+  max-width: 600px;
+}
+
+/* título estilo menu */
+.titulo {
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* subtítulo */
+.sub {
+  margin-top: 10px;
+  color: #666;
+}
+
+/* frase */
+.frase {
+  margin-top: 40px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* palavra clicável */
+.gatilho {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.gatilho:hover {
+  letter-spacing: 2px;
+  color: #333;
+}
+
+/* segredo */
+.segredo {
+  margin-top: 30px;
+  color: #ffffff;
+  transition: 0.5s;
+}
+
+.dark .segredo {
+  color: #00ffc3;
+  text-shadow: 0 0 10px #00ffc3;
+}
+
+/* input */
+input {
+  margin-top: 30px;
+  padding: 12px;
+  width: 70%;
+  border: none;
+  border-bottom: 2px solid #000;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+}
+
+/* botão */
+button {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border: none;
+  background: black;
+  color: white;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+
+/* erro */
+#erro {
+  margin-top: 10px;
+  color: red;
+}
+.dark input {
+  background: transparent;
+  color: white;
+  border-bottom: 2px solid #00ffc3;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-shape"></div>
+<div class="bg-shape2"></div>
+
+<div class="container">
+
+  <div class="titulo">
+    Enigma em processo...
+  </div>
+
+  <div class="sub">
+    Você concluiu a primeira parte do enigma
+  </div>
+
+  <div class="frase">
+    O ser humano busca sempre por iluminação,<br>
+    mas por vezes a resposta está na 
+    <span class="gatilho" onclick="ativarEscuridao()">escuridão</span>.
+  </div>
+
+  <div class="segredo">
+    mortandela
+  </div>
+
+  <input type="text" id="senha" placeholder="...">
+
+  <br>
+  <button onclick="verificar()">CONFIRMAR</button>
+
+  <div id="erro"></div>
+
+</div>
+
+<script>
+function ativarEscuridao() {
+  document.body.classList.add("dark");
+}
+
+function verificar() {
+  let valor = document.getElementById("senha").value.toLowerCase().trim();
+
+  if (valor === "mortandela") {
+    window.location.href = "fase_final.html";
+  } else {
+    document.getElementById("erro").innerText = "...a resposta não está na luz.";
+  }
+}
+</script>
+
+</body>
+</html>

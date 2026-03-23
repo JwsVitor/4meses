@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Camadas do Jogo 💙</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, #001f3f, #000814);
+  font-family: "Courier New", monospace;
+  color: #cce6ff;
+  text-align: center;
+  overflow: hidden;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/stardust.png');
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.container {
+  z-index: 2;
+  max-width: 700px;
+  padding: 25px;
+  border: 2px solid rgba(173,216,230,0.2);
+  background: rgba(0,0,20,0.5);
+  box-shadow: 0 0 20px rgba(0, 140, 255, 0.4);
+}
+
+h1 {
+  font-size: 26px;
+  text-shadow: 0 0 8px #00aaff;
+}
+
+.layer {
+  margin: 10px 0;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.highlight {
+  color: #66ccff;
+  text-shadow: 0 0 6px #66ccff;
+}
+
+input {
+  margin-top: 15px;
+  padding: 10px;
+  width: 80%;
+  background: black;
+  border: 1px solid #66ccff;
+  color: white;
+  text-align: center;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  background: transparent;
+  border: 2px solid #66ccff;
+  color: #66ccff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #66ccff;
+  color: black;
+  box-shadow: 0 0 10px #66ccff;
+}
+
+.question-box {
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Vamos jogar o jogo</h1>
+
+<p>
+Mas antes de continuar...
+<br><br>
+Você precisa entender como isso funciona.
+</p>
+
+<div class="layer">Camada 1 — <span class="highlight">O início</span> (fácil)</div>
+<div class="layer">Camada 2 — Memórias</div>
+<div class="layer">Camada 3 — Sentimentos</div>
+<div class="layer">Camada 4 — <span class="highlight">O mundo real</span> (difícil)</div>
+
+<p>
+Cada camada vai te desafiar mais
+<br>
+Lembranças e detalhes 
+<br>
+te guiarão nessa jornada
+</p>
+
+<hr style="opacity:0.2; margin:20px 0;">
+
+<h2>Camada 1: O início</h2>
+
+<div class="question-box">
+  <p id="pergunta"></p>
+  <input id="resposta" placeholder="Digite sua resposta...">
+  <br>
+  <button onclick="responder()">Confirmar</button>
+</div>
+
+</div>
+
+<script>
+
+const perguntas = [
+  "Onde foi que nos conhecemos?",
+  "Onde foi nosso primeiro date?",
+  "Nosso primeiro beijo foi onde?",
+  "Que dia eu te pedi em namoro?",
+  "Qual é o nosso lugar marcante?"
+];
+
+const respostas = [
+  ["tinder"],
+  ["sebo", "cebo"],
+  ["ramiro"],
+  ["23/11"],
+  ["ramiro"]
+];
+let etapa = 0;
+
+function carregarPergunta() {
+  document.getElementById("pergunta").innerText = perguntas[etapa];
+  document.getElementById("resposta").value = "";
+}
+
+function responder() {
+  let respostaUser = document.getElementById("resposta").value.toLowerCase();
+
+  let respostasValidas = respostas[etapa];
+
+  let acertou = respostasValidas.some(r => respostaUser.includes(r));
+
+  if (acertou) {
+
+    etapa++;
+
+    if (etapa < perguntas.length) {
+      carregarPergunta();
+    } else {
+      alert("Você passou! Fez o mínimo, né...");
+      window.location.href = "fase02.html";;
+    }
+
+  } else {
+    alert("Hmm... tenta de novo 💭");
+  }
+}
+
+// inicia a primeira pergunta
+carregarPergunta();
+
+</script>
+
+</body>
+</html>

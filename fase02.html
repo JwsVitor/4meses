@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Fase 2</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: #0a0a0a;
+  color: #cfcfcf;
+  font-family: "Courier New", monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* granulado estilo PS1 */
+body::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("https://www.transparenttextures.com/patterns/noise.png");
+  opacity: 0.15;
+}
+
+/* container */
+.container {
+  width: 700px;
+  padding: 30px;
+  border: 1px solid #444;
+  background: rgba(0,0,0,0.7);
+  box-shadow: 0 0 30px rgba(0,0,0,0.9);
+  z-index: 2;
+}
+
+/* título */
+.titulo {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+/* texto */
+.texto {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* input */
+input {
+  margin-top: 30px;
+  width: 100%;
+  padding: 10px;
+  background: black;
+  color: white;
+  border: 1px solid #555;
+}
+
+/* botão */
+button {
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  background: #111;
+  color: #ccc;
+  border: 1px solid #444;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #222;
+}
+
+/* dica */
+#dica {
+  margin-top: 15px;
+  color: #6f86ff;
+  font-size: 13px;
+  font-style: italic;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="titulo">
+    [Registro fragmentado — origem desconhecida]
+  </div>
+
+  <div class="texto">
+    Presentear alguém
+é como dobrar o tempo com cuidado,
+e esconder dentro de um gesto
+tudo aquilo que não coube em palavras.<br><br>
+Cada prsente uma história, cada presente uma resposta. <br><br>
+    O primeiro guarda um rosto sem nome,<br>
+    mas que canta tudo o que não sei dizer.<br><br>
+
+    O segundo carrega memórias em vidro,<br>
+    onde risos e noites se recusam a esquecer.<br><br>
+
+    O terceiro vive em palavras silenciosas,<br>
+    contando histórias que doem… mas fazem entender.<br><br>
+
+    Junte os fragmentos.
+  </div>
+
+  <div style="margin-top:30px;">
+  <input type="text" id="p1" placeholder="Primeiro fragmento..."><br>
+  <input type="text" id="p2" placeholder="Segundo fragmento..."><br>
+  <input type="text" id="p3" placeholder="Terceiro fragmento..."><br>
+</div>
+
+<button onclick="verificar()">Confirmar</button>
+<button onclick="darDica()">Dica</button>
+
+<div id="dica"></div>
+
+  <button onclick="verificar()">Confirmar</button>
+
+  <div id="dica"></div>
+
+</div>
+
+<script>
+let nivelDica = 0;
+
+function normalizar(txt) {
+  return txt.toLowerCase().trim();
+}
+
+function verificar() {
+  let p1 = normalizar(document.getElementById("p1").value);
+  let p2 = normalizar(document.getElementById("p2").value);
+  let p3 = normalizar(document.getElementById("p3").value);
+
+  let respostas = [p1, p2, p3];
+
+  if (
+    respostas.includes("cego") &&
+    respostas.includes("noite") &&
+    respostas.includes("escuridao")
+  ) {
+    window.location.href = "iluminação.html";
+  } else {
+    alert("...os fragmentos não se encaixam");
+  }
+}
+
+function darDica() {
+  nivelDica++;
+
+  let dica = document.getElementById("dica");
+
+  if (nivelDica === 1) {
+    dica.innerText = "Nem todos falam… mas todos dizem algo.";
+  } 
+  else if (nivelDica === 2) {
+    dica.innerText = "Um canta, um guarda, um escreve.";
+  } 
+  else {
+    dica.innerText = "cego. Noite. escuridao.";
+  }
+}
+</script>
+
+</body>
+</html>

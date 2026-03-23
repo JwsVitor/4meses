@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Nosso Jogo 💖</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #5a0000, #1a0000);
+      font-family: "Courier New", monospace;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* efeito granulado PS1 */
+    body::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .container {
+      z-index: 2;
+      max-width: 600px;
+      padding: 20px;
+      border: 2px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.3);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    }
+
+    h1 {
+      font-size: 28px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 5px red;
+    }
+
+    .title {
+      font-size: 36px;
+      margin: 20px 0;
+      color: #ff4d6d;
+      text-shadow: 0 0 10px #ff4d6d;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .btn {
+      margin-top: 30px;
+      padding: 12px 30px;
+      font-size: 18px;
+      color: white;
+      background: transparent;
+      border: 2px solid #ff4d6d;
+      cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .btn:hover {
+      background: #ff4d6d;
+      box-shadow: 0 0 10px #ff4d6d;
+    }
+
+    /* piscando estilo PS1 */
+    .blink {
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0.4; }
+    }
+    img{
+     border-radius: 10%;
+     max-width: 200px;
+     box-shadow: solid 50px 10px 50px;
+    }
+   .coracao {
+  position: fixed;
+  font-size: 22px;
+  pointer-events: none;
+  animation: explodir 1s ease-out forwards;
+}
+
+@keyframes explodir {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(1.8);
+    opacity: 0;
+  }
+}
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Feliz 4 meses ❤️🖕</h1>
+    <img src="imagens/nos.jpg" alt="nós">
+    <div class="title">
+      te amo
+    </div>
+
+    <p>
+      Eu preparei algo pra você...
+      <br>
+      Mas dessa vez, não é só um presente.
+      <br>
+      É um caminho.
+      <br>
+      E você vai ter que descobrir sozinha <br> como passar por ele.
+      <br>
+      Bom, mais ou menos...
+    </p>
+
+<a href="Error.html" onclick="criarExplosao(event)">
+  <button class="btn blink">
+    ▶ PLAY
+  </button>
+</a>
+    </a>
+  </div>
+<script>
+function criarExplosao(event) {
+  event.preventDefault();
+
+  let rect = event.target.getBoundingClientRect();
+  let centerX = rect.left + rect.width / 2;
+  let centerY = rect.top + rect.height / 2;
+
+  const emojis = ["❤️","🖕","❤️","❤️","💞","💕","🖕","❤️","❤️"];
+
+  for (let i = 0; i < 30; i++) {
+    let coracao = document.createElement("div");
+    coracao.className = "coracao";
+
+    coracao.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+
+    coracao.style.left = centerX + "px";
+    coracao.style.top = centerY + "px";
+
+    // direção aleatória (explosão)
+    let x = (Math.random() - 0.5) * 400;
+    let y = (Math.random() - 0.5) * 400;
+
+    coracao.style.setProperty('--x', x + "px");
+    coracao.style.setProperty('--y', y + "px");
+
+    document.body.appendChild(coracao);
+
+    setTimeout(() => {
+      coracao.remove();
+    }, 1000);
+  }
+
+  // delay antes de trocar de página
+  setTimeout(() => {
+    window.location.href = "Error.html";
+  }, 900);
+}
+</script>
+</body>
+</html>

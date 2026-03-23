@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Entre o Tempo e o Espaço 💙</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #000814, #000000);
+      font-family: "Courier New", monospace;
+      color: #a8d8ff;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* estrelas estilo PS2 */
+    body::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .container {
+      z-index: 2;
+      max-width: 700px;
+      padding: 25px;
+      border: 2px solid rgba(100,180,255,0.2);
+      background: rgba(0,0,30,0.5);
+      box-shadow: 0 0 25px rgba(0, 150, 255, 0.3);
+    }
+
+    h1 {
+      font-size: 24px;
+      text-shadow: 0 0 10px #4fc3ff;
+    }
+
+    .quote {
+      margin: 20px 0;
+      font-size: 15px;
+      font-style: italic;
+      opacity: 0.9;
+    }
+
+    .tardis {
+      margin: 20px auto;
+      width: 120px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      50% { transform: translateY(-10px); }
+    }
+
+    .btn {
+      margin-top: 25px;
+      padding: 10px 25px;
+      background: transparent;
+      border: 2px solid #4fc3ff;
+      color: #4fc3ff;
+      cursor: pointer;
+      transition: 0.3s;
+      letter-spacing: 2px;
+    }
+
+    .btn:hover {
+      background: #4fc3ff;
+      color: black;
+      box-shadow: 0 0 10px #4fc3ff;
+    }
+
+    .blink {
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0.4; }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Entre o tempo... e o espaço </h1>
+
+  <!-- TARDIS -->
+  <img class="tardis" src="imagens/IMG_2235-ezgif.com-resize-2.gif">
+
+  <div class="quote">
+    “We’re all stories, in the end. Just make it a good one.”
+  </div>
+
+  <div class="quote">
+    Nesse universo vasto...
+    entre bilhões de possibilidades,<br>
+    é um privilégio dividir espaço com você.
+  </div>
+
+  <div class="quote">
+    De todos os caminhos possíveis,
+    <br>
+    de todas as versões do tempo...
+    <br>
+    eu escolheria você em todas elas.
+  </div>
+
+  <p>
+    Mas o tempo não para...
+    <br>
+    E o jogo também não.
+  </p>
+
+  <button class="btn blink" onclick="nextPhase()">
+    CONTINUAR ▶
+  </button>
+
+</div>
+
+<script>
+function nextPhase() {
+  window.location.href = "fase2.html";
+}
+</script>
+
+</body>
+</html>

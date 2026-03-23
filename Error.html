@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404</title>
+    <style>
+        :root{
+          --cor404:#F8F8F8;
+        }
+        body{
+            background-color:var(--cor404) ;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content:center;
+            align-items: center;
+
+        }
+        h1{
+            font-size: 100px;
+        }
+        h2,p{
+            color: #a5a4a4;
+
+        }
+        h2#error{
+           font-size: 50px
+        }
+        p#recarregar{
+          background-color: rgb(87, 175, 216);
+          color: white;
+          padding: 10px;
+          border-radius: 20px;
+          
+        }
+        p#recarregar:hover{
+            background-color: rgba(36, 139, 139, 0.61);
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1><img src="imagens/error.jpg" alt="error"></h1>
+    <h2 id="error">404</h2>
+    <h2>PAGE NOT FOUND</h2>
+    <p>The page cannot be displayed because an internal server error has occurred</p>
+    <a href="fase01.html">
+        <p id="recarregar">recarregar pagina</p>
+    </a>
+</body>
+</html>
