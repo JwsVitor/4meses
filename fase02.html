@@ -17,7 +17,6 @@ body {
   overflow: hidden;
 }
 
-/* granulado estilo PS1 */
 body::after {
   content: "";
   position: absolute;
@@ -27,7 +26,6 @@ body::after {
   opacity: 0.15;
 }
 
-/* container */
 .container {
   width: 700px;
   padding: 30px;
@@ -37,22 +35,19 @@ body::after {
   z-index: 2;
 }
 
-/* título */
 .titulo {
   font-size: 14px;
   color: #888;
   margin-bottom: 20px;
 }
 
-/* texto */
 .texto {
   font-size: 15px;
   line-height: 1.7;
 }
 
-/* input */
-input {
-  margin-top: 30px;
+input, button {
+  margin-top: 10px;
   width: 100%;
   padding: 10px;
   background: black;
@@ -60,22 +55,16 @@ input {
   border: 1px solid #555;
 }
 
-/* botão */
 button {
-  margin-top: 10px;
-  padding: 10px;
-  width: 100%;
-  background: #111;
-  color: #ccc;
-  border: 1px solid #444;
   cursor: pointer;
 }
 
-button:hover {
-  background: #222;
+/* seleção estilo menu */
+.selected {
+  border: 1px solid #66ccff;
+  box-shadow: 0 0 10px #66ccff;
 }
 
-/* dica */
 #dica {
   margin-top: 15px;
   color: #6f86ff;
@@ -89,47 +78,126 @@ button:hover {
 
 <div class="container">
 
-  <div class="titulo">
-    [Registro fragmentado — origem desconhecida]
-  </div>
-
-  <div class="texto">
-    Presentear alguém
-é como dobrar o tempo com cuidado,
-e esconder dentro de um gesto
-tudo aquilo que não coube em palavras.<br><br>
-Cada prsente uma história, cada presente uma resposta. <br><br>
-    O primeiro guarda um rosto sem nome,<br>
-    mas que canta tudo o que não sei dizer.<br><br>
-
-    O segundo carrega memórias em vidro,<br>
-    onde risos e noites se recusam a esquecer.<br><br>
-
-    O terceiro vive em palavras silenciosas,<br>
-    contando histórias que doem… mas fazem entender.<br><br>
-
-    Junte os fragmentos.
-  </div>
-
-  <div style="margin-top:30px;">
-  <input type="text" id="p1" placeholder="Primeiro fragmento..."><br>
-  <input type="text" id="p2" placeholder="Segundo fragmento..."><br>
-  <input type="text" id="p3" placeholder="Terceiro fragmento..."><br>
+<div class="titulo">
+[Registro fragmentado — origem desconhecida]
 </div>
+
+<div class="texto">
+Presentear alguém
+é dobrar o tempo com cuidado,
+é esconder em silêncio
+tudo aquilo que o peito nunca soube dizer.
+<br><br>
+Há gestos que não são só gestos,
+são promessas disfarçadas,
+memórias esperando
+o momento certo de serem lembradas.
+<br><br>
+Entre eles,
+há aquele que não se revela aos olhos,
+mas se curva sobre quem escuta.
+<br><br>
+Ele não chama,
+ele sussurra.
+<br><br>
+É devoção.
+<br><br>
+Um encontro silencioso
+com aquilo que habita além da vigília,
+um deus antigo,
+tecido em sonhos,
+que observa de olhos fechados
+e ainda assim…
+vê tudo.
+<br><br>
+Outro se guarda em vidro,
+em noites que nunca acabam,
+onde risos se misturam ao escuro
+e cada gole carrega um pedaço do quem fomos.
+<br><br>
+E há também o que não fala alto,
+mas escreve em silêncio,
+um refúgio de páginas,
+onde a dor aprende a respirar,
+e a culpa… tenta se tornar redenção.
+<br><br>
+Se você chegou até aqui,
+então já sabe:
+<br><br>
+não são apenas presentes.
+<br>
+São fragmentos.
+<br><br>
+E só quem lembra…
+consegue juntar.
+<br><br>
+</div>
+
+<input type="text" id="p1" placeholder="Primeiro fragmento..." autocomplete="off">
+<input type="text" id="p2" placeholder="Segundo fragmento..."autocomplete="off">
+<input type="text" id="p3" placeholder="Terceiro fragmento..."autocomplete="off">
 
 <button onclick="verificar()">Confirmar</button>
 <button onclick="darDica()">Dica</button>
 
 <div id="dica"></div>
 
-  <button onclick="verificar()">Confirmar</button>
-
-  <div id="dica"></div>
-
 </div>
+
+<!-- SONS -->
+<audio id="moveSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+<audio id="selectSound" src="https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3"></audio>
+<audio id="errorSound" src="https://assets.mixkit.co/active_storage/sfx/2947/2947-preview.mp3"></audio>
 
 <script>
 let nivelDica = 0;
+
+const elementos = [
+  document.getElementById("p1"),
+  document.getElementById("p2"),
+  document.getElementById("p3"),
+  document.querySelector("button:nth-of-type(1)"),
+  document.querySelector("button:nth-of-type(2)")
+];
+
+let index = 0;
+
+const moveSound = document.getElementById("moveSound");
+const selectSound = document.getElementById("selectSound");
+const errorSound = document.getElementById("errorSound");
+
+function atualizarSelecao() {
+  elementos.forEach(el => el.classList.remove("selected"));
+  elementos[index].classList.add("selected");
+  elementos[index].focus();
+}
+
+document.addEventListener("keydown", (e) => {
+
+  if (e.key === "ArrowDown") {
+    index = (index + 1) % elementos.length;
+    moveSound.currentTime = 0;
+    moveSound.play();
+  }
+
+  if (e.key === "ArrowUp") {
+    index = (index - 1 + elementos.length) % elementos.length;
+    moveSound.currentTime = 0;
+    moveSound.play();
+  }
+
+  if (e.key === "Enter") {
+    const el = elementos[index];
+
+    if (el.tagName === "BUTTON") {
+      selectSound.currentTime = 0;
+      selectSound.play();
+      el.click();
+    }
+  }
+
+  atualizarSelecao();
+});
 
 function normalizar(txt) {
   return txt.toLowerCase().trim();
@@ -147,8 +215,9 @@ function verificar() {
     respostas.includes("noite") &&
     respostas.includes("escuridao")
   ) {
-    window.location.href = "iluminação.html";
+    window.location.href = "iluminacao.html";
   } else {
+    errorSound.play();
     alert("...os fragmentos não se encaixam");
   }
 }
@@ -162,12 +231,15 @@ function darDica() {
     dica.innerText = "Nem todos falam… mas todos dizem algo.";
   } 
   else if (nivelDica === 2) {
-    dica.innerText = "Um canta, um guarda, um escreve.";
+    dica.innerText = "Um canta, um guarda, um conta uma história.";
   } 
   else {
-    dica.innerText = "cego. Noite. escuridao.";
+    dica.innerText = "Vessel, Jack daniels, Diário do Arthur.";
   }
 }
+
+// inicia seleção
+atualizarSelecao();
 </script>
 
 </body>

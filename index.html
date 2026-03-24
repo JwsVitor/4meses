@@ -1,179 +1,245 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Nosso Jogo 💖</title>
+<meta charset="UTF-8">
+<title>Nosso Jogo</title>
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle, #5a0000, #1a0000);
-      font-family: "Courier New", monospace;
-      color: #fff;
-      text-align: center;
-      overflow: hidden;
-    }
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Courier New", monospace;
+  color: #00aaff;
+  overflow: hidden;
+}
 
-    /* efeito granulado PS1 */
-    body::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-      opacity: 0.3;
-      pointer-events: none;
-    }
+/* Scanlines */
+body::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.03) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+}
 
-    .container {
-      z-index: 2;
-      max-width: 600px;
-      padding: 20px;
-      border: 2px solid rgba(255,255,255,0.2);
-      background: rgba(0,0,0,0.3);
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-    }
-
-    h1 {
-      font-size: 28px;
-      letter-spacing: 2px;
-      text-shadow: 0 0 5px red;
-    }
-
-    .title {
-      font-size: 36px;
-      margin: 20px 0;
-      color: #ff4d6d;
-      text-shadow: 0 0 10px #ff4d6d;
-    }
-
-    p {
-      font-size: 16px;
-      line-height: 1.6;
-      opacity: 0.9;
-    }
-
-    .btn {
-      margin-top: 30px;
-      padding: 12px 30px;
-      font-size: 18px;
-      color: white;
-      background: transparent;
-      border: 2px solid #ff4d6d;
-      cursor: pointer;
-      transition: 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .btn:hover {
-      background: #ff4d6d;
-      box-shadow: 0 0 10px #ff4d6d;
-    }
-
-    /* piscando estilo PS1 */
-    .blink {
-      animation: blink 1.2s infinite;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0.4; }
-    }
-    img{
-     border-radius: 10%;
-     max-width: 200px;
-     box-shadow: solid 50px 10px 50px;
-    }
-   .coracao {
+/* Fade */
+.fade {
   position: fixed;
-  font-size: 22px;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0;
   pointer-events: none;
-  animation: explodir 1s ease-out forwards;
+  transition: 1s;
 }
 
-@keyframes explodir {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(var(--x), var(--y)) scale(1.8);
-    opacity: 0;
-  }
+.fade.active {
+  opacity: 1;
 }
-  </style>
+
+/* Menu */
+.menu {
+  text-align: center;
+}
+
+.gameTitle {
+  position: absolute;
+  top: 40px;
+  font-size: 32px;
+  text-shadow: 0 0 15px #00aaff;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px #00aaff;
+}
+
+.option {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.selected {
+  color: white;
+  text-shadow: 0 0 10px white;
+  transform: scale(1.1);
+}
+
+.locked {
+  color: #555;
+}
+
+/* Loading */
+.loading {
+  display: none;
+  font-size: 20px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.3; }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>Feliz 4 meses ❤️🖕</h1>
-    <img src="imagens/nos.jpg" alt="nós">
-    <div class="title">
-      te amo
-    </div>
+<div class="gameTitle">NOSSO JOGO</div>
 
-    <p>
-      Eu preparei algo pra você...
-      <br>
-      Mas dessa vez, não é só um presente.
-      <br>
-      É um caminho.
-      <br>
-      E você vai ter que descobrir sozinha <br> como passar por ele.
-      <br>
-      Bom, mais ou menos...
-    </p>
+<div class="fade" id="fade"></div>
 
-<a href="Error.html" onclick="criarExplosao(event)">
-  <button class="btn blink">
-    ▶ PLAY
-  </button>
-</a>
-    </a>
-  </div>
+<!-- MENU PRINCIPAL -->
+<div class="menu" id="mainMenu">
+  <div class="title">▶ SYSTEM MENU</div>
+  <div class="option selected">Jogar</div>
+  <div class="option">Configurações</div>
+  <div class="option">Sair</div>
+</div>
+
+<!-- MENU DE JOGO -->
+<div class="menu" id="playMenu" style="display:none;">
+  <div class="title">▶ SELECT MODE</div>
+  <div class="option selected">Novo Jogo</div>
+  <div class="option">Continuar</div>
+  <div class="option">Voltar</div>
+</div>
+
+<!-- MENU DE FASES -->
+<div class="menu" id="phaseMenu" style="display:none;">
+  <div class="title">▶ SELECT STAGE</div>
+  <div class="option selected">Fase 1</div>
+  <div class="option locked">Fase 2 🔒</div>
+  <div class="option locked">Fase 3 🔒</div>
+  <div class="option locked">Fase 4 🔒</div>
+  <div class="option">Voltar</div>
+</div>
+
+<!-- CONFIG -->
+<div class="menu" id="configMenu" style="display:none;">
+  <div class="title">▶ SETTINGS</div>
+  <div class="option selected">Volume</div>
+  <div class="option">Brilho</div>
+  <div class="option">Voltar</div>
+</div>
+
+<div class="loading" id="loading">Carregando...</div>
+
+<!-- Sons -->
+<audio id="moveSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+<audio id="selectSound" src="https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3"></audio>
+
 <script>
-function criarExplosao(event) {
-  event.preventDefault();
+let currentMenu = "mainMenu";
+let index = 0;
 
-  let rect = event.target.getBoundingClientRect();
-  let centerX = rect.left + rect.width / 2;
-  let centerY = rect.top + rect.height / 2;
+const fade = document.getElementById("fade");
+const loading = document.getElementById("loading");
 
-  const emojis = ["❤️","🖕","❤️","❤️","💞","💕","🖕","❤️","❤️"];
+const moveSound = document.getElementById("moveSound");
+const selectSound = document.getElementById("selectSound");
 
-  for (let i = 0; i < 30; i++) {
-    let coracao = document.createElement("div");
-    coracao.className = "coracao";
+function getOptions() {
+  return document.querySelectorAll(`#${currentMenu} .option`);
+}
 
-    coracao.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+function updateMenu() {
+  const options = getOptions();
+  options.forEach((opt, i) => {
+    opt.classList.remove("selected");
+    if (i === index) opt.classList.add("selected");
+  });
+}
 
-    coracao.style.left = centerX + "px";
-    coracao.style.top = centerY + "px";
+function switchMenu(menuId) {
+  document.getElementById(currentMenu).style.display = "none";
+  currentMenu = menuId;
+  document.getElementById(currentMenu).style.display = "block";
+  index = 0;
+  updateMenu();
+}
 
-    // direção aleatória (explosão)
-    let x = (Math.random() - 0.5) * 400;
-    let y = (Math.random() - 0.5) * 400;
+function fakeLoading(callback) {
+  fade.classList.add("active");
+  setTimeout(() => loading.style.display = "block", 500);
 
-    coracao.style.setProperty('--x', x + "px");
-    coracao.style.setProperty('--y', y + "px");
+  setTimeout(() => {
+    loading.style.display = "none";
+    fade.classList.remove("active");
+    callback();
+  }, 2000);
+}
 
-    document.body.appendChild(coracao);
+document.addEventListener("keydown", (e) => {
+  const options = getOptions();
 
-    setTimeout(() => {
-      coracao.remove();
-    }, 1000);
+  if (e.key === "ArrowDown") {
+    index = (index + 1) % options.length;
+    moveSound.currentTime = 0;
+    moveSound.play();
   }
 
-  // delay antes de trocar de página
-  setTimeout(() => {
-    window.location.href = "Error.html";
-  }, 900);
+  if (e.key === "ArrowUp") {
+    index = (index - 1 + options.length) % options.length;
+    moveSound.currentTime = 0;
+    moveSound.play();
+  }
+
+  if (e.key === "Enter") {
+    selectSound.currentTime = 0;
+    selectSound.play();
+
+    const choice = options[index].textContent;
+
+    if (currentMenu === "mainMenu") {
+      if (choice === "Jogar") fakeLoading(() => switchMenu("playMenu"));
+      if (choice === "Configurações") switchMenu("configMenu");
+      if (choice === "Sair") alert("Desligando sistema...");
+    }
+
+    else if (currentMenu === "playMenu") {
+      if (choice === "Novo Jogo") fakeLoading(() => switchMenu("phaseMenu"));
+      if (choice === "Continuar") alert("Nenhum save encontrado...");
+      if (choice === "Voltar") switchMenu("mainMenu");
+    }
+
+    else if (currentMenu === "phaseMenu") {
+
+  if (choice.includes("Fase 1")) {
+    fakeLoading(() => {
+      window.location.href = "fase01.html";
+    });
+  }
+
+  else if (choice.includes("🔒")) {
+    alert("Fase bloqueada...");
+  }
+
+  else if (choice === "Voltar") {
+    switchMenu("playMenu");
+  }
+
 }
+
+    else if (currentMenu === "configMenu") {
+      if (choice === "Voltar") switchMenu("mainMenu");
+      else alert(choice + " ajustado!");
+    }
+  }
+
+  updateMenu();
+});
 </script>
+
 </body>
 </html>

@@ -84,7 +84,20 @@
     @keyframes blink {
       50% { opacity: 0.4; }
     }
+#perguntaEspecial button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #66ccff;
+  color: #66ccff;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
+#perguntaEspecial button:hover {
+  background: #66ccff;
+  color: black;
+}
   </style>
 </head>
 
@@ -97,9 +110,7 @@
   <!-- TARDIS -->
   <img class="tardis" src="imagens/IMG_2235-ezgif.com-resize-2.gif">
 
-  <div class="quote">
-    “We’re all stories, in the end. Just make it a good one.”
-  </div>
+  
 
   <div class="quote">
     Nesse universo vasto...
@@ -121,14 +132,71 @@
     E o jogo também não.
   </p>
 
-  <button class="btn blink" onclick="nextPhase()">
+  <button class="btn blink" onclick="abrirPerguntaEspecial()">
     CONTINUAR ▶
   </button>
+<div id="perguntaEspecial" style="display:none; margin-top:20px;">
+  <p>Mas antes, uma pergunta... Quem se apaixonou primeiro?</p>
 
+  <button id="joaoBtn" onclick="clicouJoao()">João</button>
+  <button id="karolBtn" onclick="clicouKarol()">Karol 💙</button>
+</div>
 </div>
 
 <script>
 function nextPhase() {
+  window.location.href = "fase02.html";
+}
+let tamanhoKarol = 1;
+
+function abrirPerguntaEspecial() {
+  document.getElementById("perguntaEspecial").style.display = "block";
+}
+
+function clicouJoao() {
+
+  const karolBtn = document.getElementById("karolBtn");
+
+  tamanhoKarol += 0.3;
+
+  karolBtn.style.transform = `scale(${tamanhoKarol})`;
+
+  // opcional: som de erro
+  errorSound.currentTime = 0;
+  errorSound.play();
+}
+
+function clicouKarol() {
+
+  // som de acerto
+  correctSound.currentTime = 0;
+  correctSound.play();
+
+  document.querySelector(".container").innerHTML = `
+    <h1>Resposta correta 😌</h1>
+    <p>Você sabe a verdade 💙</p>
+  `;
+
+  setTimeout(() => {
+    window.location.href = "01.html";
+  }, 2000);
+}
+function clicouKarol() {
+
+  // som de acerto
+  correctSound.currentTime = 0;
+  correctSound.play();
+
+  document.querySelector(".container").innerHTML = `
+    <h1>Resposta correta 😌</h1>
+    <p>Você sabe a verdade 💙</p>
+  `;
+
+  setTimeout(() => {
+    window.location.href = "fase02.html";
+  }, 2000);
+}
+function clicouKarol() {
   window.location.href = "fase02.html";
 }
 </script>

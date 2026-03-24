@@ -25,7 +25,6 @@ body::after {
   height: 100%;
   background: url('https://www.transparenttextures.com/patterns/stardust.png');
   opacity: 0.25;
-  pointer-events: none;
 }
 
 .container {
@@ -53,34 +52,38 @@ h1 {
   text-shadow: 0 0 6px #66ccff;
 }
 
-input {
-  margin-top: 15px;
-  padding: 10px;
-  width: 80%;
-  background: black;
-  border: 1px solid #66ccff;
-  color: white;
-  text-align: center;
+.question-box {
+  margin-top: 20px;
 }
 
-button {
-  margin-top: 20px;
-  padding: 10px 25px;
+/* BOTÕES */
+#opcoes button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
   background: transparent;
-  border: 2px solid #66ccff;
+  border: 1px solid #66ccff;
   color: #66ccff;
   cursor: pointer;
   transition: 0.3s;
 }
 
-button:hover {
+#opcoes button:hover {
   background: #66ccff;
   color: black;
   box-shadow: 0 0 10px #66ccff;
 }
 
-.question-box {
-  margin-top: 20px;
+#opcoes button:active {
+  transform: scale(0.95);
+}
+
+/* SELEÇÃO PELO TECLADO */
+.selected {
+  background: #66ccff;
+  color: black !important;
+  box-shadow: 0 0 10px #66ccff;
 }
 </style>
 </head>
@@ -97,34 +100,26 @@ Mas antes de continuar...
 Você precisa entender como isso funciona.
 </p>
 
-<div class="layer">Camada 1 — <span class="highlight">O início</span> (fácil)</div>
-<div class="layer">Camada 2 — Memórias</div>
-<div class="layer">Camada 3 — Sentimentos</div>
-<div class="layer">Camada 4 — <span class="highlight">O mundo real</span> (difícil)</div>
-
-<p>
-Cada camada vai te desafiar mais
-<br>
-Lembranças e detalhes 
-<br>
-te guiarão nessa jornada
-</p>
+<div class="layer">Fase 01 — <span class="highlight">O início</span></div>
+<div class="layer">Fase 02 — <span class="highlight">Moderado</span></div>
 
 <hr style="opacity:0.2; margin:20px 0;">
 
-<h2>Camada 1: O início</h2>
+<h2>Camada 1</h2>
 
 <div class="question-box">
   <p id="pergunta"></p>
-  <input id="resposta" placeholder="Digite sua resposta..." autocomplete="off">
-  <br>
-  <button onclick="responder()">Confirmar</button>
+  <div id="opcoes"></div>
 </div>
 
 </div>
+
+<!-- SONS -->
+<audio id="clickSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+<audio id="correctSound" src="https://assets.mixkit.co/active_storage/sfx/3207/3207-preview.mp3"></audio>
+<audio id="errorSound" src="https://assets.mixkit.co/active_storage/sfx/2947/2947-preview.mp3"></audio>
 
 <script>
-
 const perguntas = [
   "Onde foi que nos conhecemos?",
   "Onde foi nosso primeiro date?",
@@ -133,53 +128,118 @@ const perguntas = [
   "Qual é o nosso lugar marcante?"
 ];
 
-const respostas = [
-  ["tinder"],
-  ["sebo", "cebo"],
-  ["ramiro"],
-  ["23/11"],
-  ["ramiro"]
+const dados = [
+  { opcoes: ["Tinder","Instagram","Shopping","Ramiro"], correta: "Tinder" },
+  { opcoes: ["Shopping","Sebo","Cinema","Praia"], correta: "Sebo" },
+  { opcoes: ["Ramiro","Praia","Carro","Cinema"], correta: "Ramiro" },
+  { opcoes: ["22/11","23/11","24/11","25/11"], correta: "23/11" },
+  { opcoes: ["Ramiro","Shopping","Praia","Casa"], correta: "Ramiro" }
 ];
+
 let etapa = 0;
+let selectedIndex = 0;
+
+const clickSound = document.getElementById("clickSound");
+const correctSound = document.getElementById("correctSound");
+const errorSound = document.getElementById("errorSound");
 
 function carregarPergunta() {
+  selectedIndex = 0;
+
   document.getElementById("pergunta").innerText = perguntas[etapa];
-  document.getElementById("resposta").value = "";
+  const opcoesDiv = document.getElementById("opcoes");
+  opcoesDiv.innerHTML = "";
+
+  dados[etapa].opcoes.forEach((opcao, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = opcao;
+
+    btn.onclick = () => responder(opcao, btn);
+
+    if (i === 0) btn.classList.add("selected");
+
+    opcoesDiv.appendChild(btn);
+  });
 }
 
-function responder() {
-  let respostaUser = document.getElementById("resposta").value.toLowerCase();
-
-  let respostasValidas = respostas[etapa];
-
-  let acertou = respostasValidas.some(r => respostaUser.includes(r));
-
-  if (acertou) {
-
-    etapa++;
-
-   if (etapa < perguntas.length) {
-  carregarPergunta();
-} else {
-
-  document.querySelector(".container").innerHTML = `
-    <h1>Camada concluída</h1>
-    <p>Você conseguiu…</p>
-  `;
-
-  setTimeout(() => {
-    window.location.href = "01.html";
-  }, 2000);
+function atualizarSelecao() {
+  const botoes = document.querySelectorAll("#opcoes button");
+  botoes.forEach(btn => btn.classList.remove("selected"));
+  botoes[selectedIndex].classList.add("selected");
 }
+
+function responder(resposta, botao) {
+
+  clickSound.currentTime = 0;
+  clickSound.play();
+
+  const correta = dados[etapa].correta;
+
+  if (resposta === correta) {
+
+    correctSound.currentTime = 0;
+    correctSound.play();
+
+    botao.style.background = "#66ccff";
+    botao.style.color = "black";
+
+    setTimeout(() => {
+      etapa++;
+
+      if (etapa < perguntas.length) {
+        carregarPergunta();
+      } else {
+        document.querySelector(".container").innerHTML = `
+          <h1>Camada concluída</h1>
+          <p>Você conseguiu… 💙</p>
+        `;
+
+        setTimeout(() => {
+          window.location.href = "01.html";
+        }, 2000);
+      }
+
+    }, 600);
 
   } else {
-    alert("Hmm... tenta de novo 💭");
+
+    errorSound.currentTime = 0;
+    errorSound.play();
+
+    botao.style.background = "red";
+    botao.style.color = "white";
+
+    setTimeout(() => {
+      botao.style.background = "transparent";
+      botao.style.color = "#66ccff";
+    }, 500);
   }
 }
 
-// inicia a primeira pergunta
-carregarPergunta();
+/* CONTROLE TECLADO */
+document.addEventListener("keydown", (e) => {
 
+  const botoes = document.querySelectorAll("#opcoes button");
+
+  if (e.key === "ArrowDown") {
+    selectedIndex = (selectedIndex + 1) % botoes.length;
+    clickSound.play();
+    atualizarSelecao();
+  }
+
+  if (e.key === "ArrowUp") {
+    selectedIndex = (selectedIndex - 1 + botoes.length) % botoes.length;
+    clickSound.play();
+    atualizarSelecao();
+  }
+
+  if (e.key === "Enter") {
+    botoes[selectedIndex].click();
+  }
+
+});
+
+carregarPergunta();
 </script>
 
 </body>

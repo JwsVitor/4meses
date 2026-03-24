@@ -1,1 +1,70 @@
-<html lang="pt-BR"> <head> <meta charset="UTF-8"> <title>Arquivo Encontrado</title> <style> body { margin: 0; height: 100vh; background: black; display: flex; align-items: center; justify-content: center; font-family: "Courier New", monospace; overflow: hidden; } /* textura estilo PS1 */ body::after { content: ""; position: absolute; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/asfalt-light.png'); opacity: 0.2; } .carta { width: 600px; background: #e8e0c9; color: #2b2b2b; padding: 30px; border: 3px solid #999; box-shadow: 0 0 40px rgba(0,0,0,0.9); line-height: 1.6; z-index: 2; position: relative; } .titulo { font-weight: bold; margin-bottom: 15px; font-size: small; } .texto { font-size: 14px; } .continuar { margin-top: 20px; text-align: center; font-size: 12px; opacity: 0.6; animation: piscar 1.5s infinite; } @keyframes piscar { 0% {opacity: 0.2;} 50% {opacity: 1;} 100% {opacity: 0.2;} } .popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; } .popup img { max-width: 80%; border: 3px solid white; } .fechar { position: absolute; top: 20px; right: 30px; font-size: 30px; color: white; cursor: pointer; } </style> </head> <audio id="bgm" autoplay loop> <source src="musica.mp3" type="audio/mpeg"> </audio> <body> <div class="carta"> <p class="titulo">[Arquivo encontrado] próximo ao Parque Ramiro Ruediger - 23/11/2025</p> <p class="texto"> Karol,<br><br> Eu amo como sua "estranhesa" se encaixa na minha, tornando o "normal" fútil e incompleto. Quando estou com você sinto que posso ser eu mesmo, é como se cada detalhe seu tornasse o cotidiano singular. <br><br> Eu amo quando você me acorda com seu ronco e derrepente, ainda sonolento, me sinto feliz de você estar ao meu lado. <br><br> Eu amo quando, mesmo sem perceber, você chega em algum lugar e iluminada o ambiente, transbornando sua carisma apaxionante. <br><br> Eu amo como não consigio mais ver meu futuro sem você presente nele. </p> <p class="continuar">(clique para continuar)</p> </div> <script> document.body.onclick = () => { window.location.href = "fase02.html"; }; </script> </body> </html>
+<html lang="pt-BR"> <head> <meta charset="UTF-8"> <title>Arquivo Encontrado</title> <style> body { margin: 0; height: 100vh; background: black; display: flex; align-items: center; justify-content: center; font-family: "Courier New", monospace; overflow: hidden; } /* textura estilo PS1 */ body::after { content: ""; position: absolute; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/asfalt-light.png'); opacity: 0.2; } .carta { width: 600px; background: #e8e0c9; color: #2b2b2b; padding: 30px; border: 3px solid #999; box-shadow: 0 0 40px rgba(0,0,0,0.9); line-height: 1.6; z-index: 2; position: relative; } .titulo { font-weight: bold; margin-bottom: 15px; font-size: small; } .texto { font-size: 14px; } .continuar { margin-top: 20px; text-align: center; font-size: 12px; opacity: 0.6; animation: piscar 1.5s infinite; } @keyframes piscar { 0% {opacity: 0.2;} 50% {opacity: 1;} 100% {opacity: 0.2;} } .popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; } .popup img { max-width: 80%; border: 3px solid white; } .fechar { position: absolute; top: 20px; right: 30px; font-size: 30px; color: white; cursor: pointer; } #playBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: 1px solid #999;
+  padding: 10px 20px;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 10px;
+  background: rgba(0,0,0,0.7);
+  transition: 0.3s;
+}
+
+#playBtn:hover {
+  color: white;
+  border-color: white;
+  box-shadow: 0 0 10px white;
+}</style> </head><body> <audio id="bgm" loop>
+  <source src="lv_0_20260324190536.mp3" type="audio/mp3">
+</audio> <div class="carta"> <p class="titulo">[Arquivo encontrado] próximo ao Parque Ramiro Ruediger - 23/11/2025</p> <p class="texto"> Não sou poeta, provavelmente nunca serei. E mesmo que um dia me torne, não chegarei perto de alguns deles.
+<br>
+Este poema é de Alberto Caeiro, o Fernando Pessoa. Não fui eu que o escrevi.
+<br>
+Mas, se um dia eu escrevesse um poema de amor pra você… eu gostaria que fosse esse.
+<br><br> O amor é uma companhia. <br>
+Já não sei andar só pelos caminhos,
+Porque já não posso andar só. <br>
+Um pensamento visível faz-me andar mais depressa
+E ver menos, e ao mesmo tempo gostar bem de ir vendo tudo. <br>
+Mesmo a ausência dela é uma coisa que está comigo. <br>
+E eu gosto tanto dela que não sei como a desejar. <br>
+ <br>
+Se a não vejo, imagino-a e sou forte como as árvores altas. <br>
+Mas se a vejo tremo, não sei o que é feito do que sinto na  <br>ausência dela. <br>
+Todo eu sou qualquer força que me abandona. <br>
+Toda a realidade olha para mim como um girassol com a cara dela no meio. <br></p>
+  <div class="continuar">
+    ▶ clicar para continuar
+  </div>
+  <div id="playBtn">▶ PLAY</div>
+<script>
+document.querySelector(".continuar").onclick = () => {
+
+  // efeito fade
+  document.body.style.transition = "0.8s";
+  document.body.style.opacity = "0";
+
+  // som opcional (se quiser depois a gente adiciona)
+  
+  setTimeout(() => {
+    window.location.href = "Error.html";
+  }, 800);
+};
+const playBtn = document.getElementById("playBtn");
+const bgm = document.getElementById("bgm");
+
+playBtn.onclick = () => {
+  bgm.volume = 0.6;
+  bgm.play();
+
+  playBtn.style.display = "none";
+};
+// teclado
+document.addEventListener("keydown", iniciarMusica);
+
+// clique (ESSENCIAL)
+document.addEventListener("click", iniciarMusica);
+</script> </div> 
+
+ </body> </html> <br>
