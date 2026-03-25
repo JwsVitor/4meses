@@ -85,6 +85,10 @@ h1 {
   color: black !important;
   box-shadow: 0 0 10px #66ccff;
 }
+    img{
+      margin: -25px;
+      margin-top: 3px;
+    }
 </style>
 </head>
 
@@ -92,16 +96,8 @@ h1 {
 
 <div class="container">
 
-<h1>Vamos jogar o jogo</h1>
-
-<p>
-Mas antes de continuar...
-<br><br>
-Você precisa entender como isso funciona.
-</p>
-
-<div class="layer">Fase 01 — <span class="highlight">O início</span></div>
-<div class="layer">Fase 02 — <span class="highlight">Moderado</span></div>
+<h1>Você lembra?</h1>
+<img src="imagens/source.gif" alt="" width="150px">
 
 <hr style="opacity:0.2; margin:20px 0;">
 
@@ -130,10 +126,10 @@ const perguntas = [
 
 const dados = [
   { opcoes: ["Tinder","Instagram","Shopping","Ramiro"], correta: "Tinder" },
-  { opcoes: ["Shopping","Sebo","Cinema","Praia"], correta: "Sebo" },
-  { opcoes: ["Ramiro","Praia","Carro","Cinema"], correta: "Ramiro" },
+  { opcoes: ["cebo","Sebo","çebo","zebo"], correta: "Sebo" },
+  { opcoes: ["Ramiro","Praia","velório","Cinema"], correta: "Ramiro" },
   { opcoes: ["22/11","23/11","24/11","25/11"], correta: "23/11" },
-  { opcoes: ["Ramiro","Shopping","Praia","Casa"], correta: "Ramiro" }
+  { opcoes: ["Ramiro","Shopping","Curt hering","Casa"], correta: "Ramiro" }
 ];
 
 let etapa = 0;

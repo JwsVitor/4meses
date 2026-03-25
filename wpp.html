@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Conversa Final</title>
+
+<style>
+body {
+  margin: 0;
+  background: #0b141a;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: opacity 1s;
+}
+
+.chat-container {
+  width: 350px;
+  height: 600px;
+  background: #111b21;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  background: #202c33;
+  padding: 15px;
+  color: #e9edef;
+  font-weight: bold;
+}
+
+.chat {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  max-width: 75%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 10px;
+  font-size: 14px;
+  animation: fadeIn 0.3s ease;
+}
+
+.user {
+  background: #005c4b;
+  align-self: flex-end;
+  color: white;
+}
+
+.system {
+  background: #202c33;
+  align-self: flex-start;
+  color: #e9edef;
+}
+
+.typing {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.input-area {
+  display: flex;
+  padding: 10px;
+  background: #202c33;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+}
+
+.input-area button {
+  margin-left: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  background: #00a884;
+  color: white;
+  cursor: pointer;
+}
+
+#continueContainer {
+  display: none;
+  padding: 10px;
+  background: #111b21;
+  text-align: center;
+}
+
+#continueContainer button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background: #00a884;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat-container">
+  <div class="header">Mor ❤️🖕</div>
+
+  <div class="chat" id="chat"></div>
+
+  <div class="input-area">
+    <input type="text" id="input" placeholder="Digite o código...">
+    <button onclick="sendMessage()">Enviar</button>
+  </div>
+
+  <div id="continueContainer">
+    <button onclick="continuar()">Continuar...</button>
+  </div>
+</div>
+
+<script>
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
+
+let isTyping = false;
+
+// códigos
+const codigos = {
+  "e07": ["um sopro de vida, página 57"],
+  "g68": ["o mundo de sofia, página 135"],
+  "d23": ["o iluminado, página 277"]
+};
+
+function addMessage(text, type) {
+  const msg = document.createElement("div");
+  msg.classList.add("message", type);
+  msg.innerText = text;
+  chat.appendChild(msg);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function typingEffect(text, delay = 1500) {
+  return new Promise(resolve => {
+    const typing = document.createElement("div");
+    typing.classList.add("message", "system", "typing");
+    typing.innerText = "digitando...";
+    chat.appendChild(typing);
+    chat.scrollTop = chat.scrollHeight;
+
+    setTimeout(() => {
+      typing.remove();
+      addMessage(text, "system");
+      resolve();
+    }, delay);
+  });
+}
+
+// intro automática
+async function startIntro() {
+  isTyping = true;
+  input.disabled = true;
+
+  await typingEffect("entre conversas e devaneios...");
+  await typingEffect("entre bons dias e boas noites...");
+  await typingEffect("a resposta sempre esteve ali.");
+
+  isTyping = false;
+  input.disabled = false;
+  input.focus();
+}
+
+// envio
+async function sendMessage() {
+  const value = input.value.toLowerCase().trim();
+  if (!value || isTyping) return;
+
+  addMessage(value, "user");
+  input.value = "";
+
+  isTyping = true;
+  input.disabled = true;
+
+  if (codigos[value]) {
+
+    for (let msg of codigos[value]) {
+      await typingEffect(msg);
+    }
+
+    // FINAL DO ENIGMA (d23)
+    if (value === "d23") {
+      await typingEffect("Mas antes de checar...");
+      await typingEffect("a primeira parte do enigma foi concluída.");
+      await typingEffect("Mas o jogo ainda não acabou.");
+      await typingEffect("Você está mais próxima do que parece.", 2500);
+
+      // esconder input
+      document.querySelector(".input-area").style.display = "none";
+
+      // mostrar botão
+      document.getElementById("continueContainer").style.display = "block";
+    }
+
+  } else {
+    await typingEffect("...");
+  }
+
+  isTyping = false;
+  input.disabled = false;
+  input.focus();
+}
+
+// ENTER
+input.addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    sendMessage();
+  }
+});
+
+// botão continuar
+function continuar() {
+  document.body.style.opacity = "0";
+
+  setTimeout(() => {
+    window.location.href = "fim.html";
+  }, 1000);
+}
+
+// iniciar
+startIntro();
+</script>
+
+</body>
+</html>

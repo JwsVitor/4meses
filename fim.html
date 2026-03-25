@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>...</title>
+
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(circle, #0b141a, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* leve efeito de respiração */
+.container {
+  text-align: center;
+  animation: fadeIn 2s ease;
+}
+
+img {
+  width: 300px;
+  max-width: 80vw;
+  border-radius: 10px;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* animações sutis */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+.analog-text {
+  margin-top: 20px;
+  color: #d0d0d0;
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  letter-spacing: 1px;
+  opacity: 0.8;
+
+  /* efeito meio “glitch / fita” */
+  text-shadow: 
+    0 0 2px rgba(255,255,255,0.2),
+    1px 0 rgba(255,0,0,0.2),
+    -1px 0 rgba(0,255,255,0.2);
+
+  animation: flicker 3s infinite;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <!-- 🔥 COLOQUE AQUI O LINK DO GIF -->
+  <img src="imagens/a501842d71ba5e5f1f400405ea11d0cf.gif" alt="crochet">
+
+    <p class="analog-text">
+    Enquanto você vai encontrando, eu vou crochetando...
+  </p>
+</div>
+
+<!-- 🎵 MÚSICA -->
+<audio autoplay loop>
+  <!-- 🔥 COLOQUE AQUI SUA MÚSICA -->
+  <source src="EXO 엑소 _Baby Don_t Cry_ (Lo-Fi Ver. ✧ Prod. Lee)(MP3_160K).mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>
